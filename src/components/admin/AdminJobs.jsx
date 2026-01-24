@@ -18,7 +18,7 @@ const AdminJobs = () => {
 
   useEffect(() => {
     dispatch(setSearchJobByText(input))
-  },[input])
+  },[input,dispatch])
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />

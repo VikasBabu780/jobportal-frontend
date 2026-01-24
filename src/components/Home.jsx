@@ -16,7 +16,7 @@ const Home = () => {
     if(user?.role == "Recruiter") {
       navigate("/company/get");
     }
-  },[])
+  },[navigate,user?.role])
   return (
     <div>
         <Navbar/>

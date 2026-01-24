@@ -23,7 +23,7 @@ const Applicants = () => {
       }
     }
     fetchApplicants();
-  },[])
+  },[dispatch,params.id])
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />

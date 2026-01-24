@@ -1,30 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Navbar from "./shared/Navbar";
 import FilterCard from "./FilterCard";
 import Job from "./Job";
 import { useSelector } from "react-redux";
-import { motion } from "framer-motion";
+import { useMemo } from "react";
 
 const Jobs = () => {
   const { allJobs = [], searchedQuery } = useSelector((store) => store.job);
-  const [filterJobs, setFilterJobs] = useState([]);
+  
 
-  useEffect(() => {
-    if (!searchedQuery) {
-      setFilterJobs(allJobs);
-      return;
-    }
+  
 
-    const query = searchedQuery.toLowerCase();
+const filteredJobs = useMemo(() => {
+  if (!searchedQuery) return allJobs;
 
-    const filtered = allJobs.filter((job) =>
-      job.title?.toLowerCase().includes(query) ||
-      job.description?.toLowerCase().includes(query) ||
-      job.location?.toLowerCase().includes(query)
-    );
+  const query = searchedQuery.toLowerCase();
 
-    setFilterJobs(filtered);
-  }, [allJobs, searchedQuery]);
+  return allJobs.filter((job) =>
+    job.title?.toLowerCase().includes(query) ||
+    job.description?.toLowerCase().includes(query) ||
+    job.location?.toLowerCase().includes(query)
+  );
+}, [allJobs, searchedQuery]);
+
 
   return (
     <div>
@@ -37,7 +35,7 @@ const Jobs = () => {
             <FilterCard />
           </div>
 
-          {filterJobs.length === 0 ? (
+          {filteredJobs.length === 0 ? (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -53,7 +51,7 @@ const Jobs = () => {
                 transition={{ duration: 0.3, ease: "easeOut" }}
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
               >
-                {filterJobs.map((job) => (
+                {filteredJobs.map((job) => (
                   <Job key={job._id} job={job} />
                 ))}
               </motion.div>

@@ -26,7 +26,7 @@ const useGetAllJobs = () => {
     };
 
     fetchAllJobs();
-  }, [dispatch]);
+  }, [dispatch,searchedQuery]);
 
   return null;
 };
