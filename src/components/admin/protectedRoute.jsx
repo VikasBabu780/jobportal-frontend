@@ -1,22 +1,14 @@
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useSelector((store) => store.auth);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user || user.role !== "recruiter") {
-      navigate("/");
-    }
-  }, [user, navigate]);
 
   if (!user || user.role !== "recruiter") {
-    return null; 
+    return <Navigate to="/" replace />;
   }
 
-  return <>{children}</>;
+  return children;
 };
 
 export default ProtectedRoute;
